@@ -1,6 +1,17 @@
-(ns ns-dependencies.core)
+(ns ns-dependencies.core
+  (:require [ns-dependencies.load :as l]
+            [ns-dependencies.view :as v]
+            [clojure.pprint]))
 
-(defn -main
-  "I don't do a whole lot."
-  [& args]
-  (println "Hello, World!"))
+(defn -main []
+  (let [path   "."
+        ns-dep (l/load-project-ns path)
+        w      500
+        h      500
+        pnl    (v/paint-ns ns-dep w h)]
+    (clojure.pprint/pprint ns-dep)
+    (doto (javax.swing.JFrame.) 
+      (.setDefaultCloseOperation javax.swing.JFrame/EXIT_ON_CLOSE)
+      (.setSize w h)
+      (.add pnl)
+      (.setVisible true))))
