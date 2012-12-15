@@ -20,7 +20,7 @@
   (rel-path [this] (.getPath this))
   (abs-path [this] (.getPath this)))
 ;;------------------------------
-(defn list-all-files
+(defn- list-all-files
   "Explores the given path recursevily 
   obtaining a list of all *.clj files."
   [s]
@@ -29,10 +29,10 @@
         children (filter #(or (directory? %) (re-matches #".*\.clj" (filename %))) children)]
     (mapcat #(if (directory? %) (list-all-files (rel-path %)) [%]) children)))
 ;;------------------------------
-(defn extract-ns [lst]
+(defn- extract-ns [lst]
   (->> lst first rest (map second) (map #(if (sequential? %) (first %) %))))
 ;;------------------------------
-(defn find-node [zp x]
+(defn- find-node [zp x]
   "Explores the zipper using next until it finds
   x or the end is reached."
   (cond (z/end? zp) nil
@@ -40,7 +40,7 @@
         (= (first zp) x) zp
         :else (recur (z/next zp) x)))
 ;;------------------------------
-(defn ns-from-file [file]
+(defn- ns-from-file [file]
   "Looks for the ns declaration form in the file and
   creares a Namespace record with the :uses and :requires
   for the given ns"

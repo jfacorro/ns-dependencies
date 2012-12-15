@@ -72,7 +72,7 @@
                           (make-figure %2 %1 fpos fsize)) (range (count nss)))
          (apply assoc {}))))
 ;;----------------------------------
-(defn paint-ns [project-ns w h]
-  (let [figures  (atom (create-figures project-ns w h))]
+(defn view-deps [ns-deps w h]
+  (let [figures  (atom (create-figures ns-deps w h))]
     (build-panel figures)))
 ;;----------------------------------
